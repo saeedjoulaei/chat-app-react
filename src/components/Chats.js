@@ -3,11 +3,14 @@ import { auth } from "../firebase";
 import { useHistory } from "react-router-dom";
 import { ChatEngine } from "react-chat-engine";
 import axios from "axios";
-//components
+
+// Components
 import Navbar from "./Navbar";
-//styles
+
+// Styles
 import styles from "./Chats.module.css";
-//context//
+
+// Context
 import { AuthContext } from "../contexts/AuthContextProvider";
 
 const Chats = () => {
@@ -33,16 +36,16 @@ const Chats = () => {
         setLoading(false);
       })
       .catch(() => {
-        let formData = new FormData();
-        formData.append("email", user.email);
-        formData.append("username", user.email);
-        formData.append("secret", user.uid);
+        let formdata = new FormData();
+        formdata.append("email", user.email);
+        formdata.append("username", user.email);
+        formdata.append("secret", user.uid);
         getFile(user.photoURL).then((avatar) => {
-          formData.append("avatar", avatar, avatar.name);
+          formdata.append("avatar", avatar, avatar.name);
           axios
-            .post("https://api.chatengine.io/users/", formData, {
+            .post("https://api.chatengine.io/users/", formdata, {
               headers: {
-                "private-key": "028215e8-b7d8-4a13-be2f-c1e5babec380 ",
+                "private-key": "028215e8-b7d8-4a13-be2f-c1e5babec380",
               },
             })
             .then(() => setLoading(false))
@@ -50,23 +53,27 @@ const Chats = () => {
         });
       });
   }, [user, history]);
+
   const getFile = async (url) => {
     const response = await fetch(url);
     const data = await response.blob();
     return new File([data], "userPhoto.jpg", { type: "image/jpeg" });
   };
+
   const logoutHandler = async () => {
     await auth.signOut();
     history.push("/");
   };
-  if (!user || loading) return "loading ...";
+
+  if (!user || loading) return "Loading...";
 
   return (
     <div className={styles.container}>
-      <Navbar LogoutHandler={logoutHandler} />
+      <Navbar logoutHandler={logoutHandler} />
+
       <ChatEngine
         height="calc(100vh - 50px)"
-        projectId="c83ae1a3-6093-4976-b925-be9593b385b5"
+        projectID="c83ae1a3-6093-4976-b925-be9593b385b5"
         userName={user.email}
         userSecret={user.uid}
       />

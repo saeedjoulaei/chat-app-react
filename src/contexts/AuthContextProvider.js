@@ -1,27 +1,29 @@
-import React, { useEffect, useState, createContext } from "react";
-import { useHistory } from "react-router-dom";
-import { auth } from "../firebase";
+import React, { useState, useEffect, Children } from 'react';
+import { useHistory } from 'react-router-dom';
+import { auth } from '../firebase';
 
-export const AuthContext = createContext();
+export const AuthContext = React.createContext();
 
-const AuthContextProvider = ({ children }) => {
-  const [loading, setLoadin] = useState(true);
-  const [user, setUser] = useState(false);
-  const history = useHistory();
+const AuthContextProvider = ({children}) => {
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUser(user);
-      setLoadin(false);
-      if (user) history.push("/chats");
-    });
-  }, [user, history]);
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(false);
+    const history = useHistory();
 
-  return (
-    <AuthContext.Provider value={user}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            setUser(user);
+            setLoading(false);
+            console.log(user)
+            if(user) history.push("/chats");
+        })
+    }, [user, history])
+
+    return (
+        <AuthContext.Provider value={user}>
+            {!loading && children}
+        </AuthContext.Provider>
+    );
 };
 
 export default AuthContextProvider;

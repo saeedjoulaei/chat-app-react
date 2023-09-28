@@ -1,16 +1,19 @@
-import React from "react";
-//styles
+import React from 'react';
+
+// Styles
 import styles from "./Navbar.module.css";
 
-const Navbar = ({ LogoutHandler }) => {
-  return (
-    <div className={styles.container}>
-      <div className={styles.name}>SM-gram</div>
-      <div className={styles.logout} onClick={LogoutHandler}>
-        Log Out
-      </div>
-    </div>
-  );
+const Navbar = ({logoutHandler}) => {
+    return (
+        <div className={styles.container}>
+            <div className={styles.name}>
+                Botogram
+            </div>
+            <div className={styles.logout} onClick={logoutHandler}>
+                Logout
+            </div>
+        </div>
+    );
 };
 
 export default Navbar;
