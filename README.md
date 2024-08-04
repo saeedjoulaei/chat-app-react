@@ -1,6 +1,6 @@
 click here : https://chat-app-react-rho.vercel.app
 
-deployed to "vercel"
+deployed to "Vercel"
 
 Technologies Used: Html , Css ,Javascript,Rest Api,React,firebase,chat engine
 
